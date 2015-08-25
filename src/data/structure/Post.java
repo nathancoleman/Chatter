@@ -40,6 +40,8 @@ public class Post {
 	
 	/**
 	 * Override of Object.equals()
+	 * @param obj the candidate for equality
+	 * @return boolean for equality
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -51,5 +53,14 @@ public class Post {
 		
 		return getUser().equals(otherPost.getUser())
 		       && getContent().equals(otherPost.getContent());
+	}
+	
+	/**
+	 * Override of Object.hashCode()
+	 * @return the integer hashcode
+	 */
+	@Override
+	public int hashCode() {
+		return (getUser() + getContent()).hashCode();
 	}
 }

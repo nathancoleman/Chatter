@@ -94,6 +94,5 @@ public class PostStoreTest {
 		for (int i = 0; i < posts.size(); i++) {
 			assertEquals("Posts do not match!", u2Posts.get(i), posts.get(i));
 		}
-		
 	}
 }
