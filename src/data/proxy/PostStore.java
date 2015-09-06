@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
+import data.proxy.utils.FunctionalUtils;
 import data.structure.Post;
 
 /**
@@ -24,8 +26,7 @@ public class PostStore {
      * Writes a post to storage.
      * 
      * @param post
-     * @throws IllegalArgumentException
-     *             if post is null
+     * @throws IllegalArgumentException if post is null
      */
     public void write(Post post) {
         if (post == null) {
@@ -43,15 +44,36 @@ public class PostStore {
      * 
      * @param user
      * @return the user's posts
-     * @throws IllegalArgumentException
-     *             if user is null
+     * @throws IllegalArgumentException if user is null
      */
     public List<Post> getPostsByUser(String user) {
+        Predicate<Post> predicate = new Predicate<Post>() {
+            @Override
+            public boolean test(Post t) {
+                return true;
+            }
+        };
+        return getPostsByUser(user, predicate);
+    }
+    
+    /**
+     * Gets the posts for the specified user from storage.
+     * 
+     * @param user
+     * @return the user's posts
+     * @throws IllegalArgumentException if user is null
+     */
+    public List<Post> getPostsByUser(String user, Predicate<Post> predicate) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
+        if (predicate == null) {
+            throw new IllegalArgumentException(
+                    "Predicate cannot be null. Use getPostByUser(user) instead.");
+        }
         if (postsByUser.containsKey(user)) {
-            return postsByUser.get(user);
+            return (List<Post>) FunctionalUtils.filteredAddAll(postsByUser.get(user), predicate,
+                    new ArrayList<Post>());
         } else {
             return new ArrayList<Post>();
         }

@@ -1,5 +1,5 @@
 package data.proxy;
 
 public class UserProfileStoreTest {
-    // TODO
+    // TODO (left as task for Charles)
 }

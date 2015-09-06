@@ -1,5 +1,6 @@
 package data.structure;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -65,6 +66,15 @@ public class UserProfile {
     public void setAttribute(String attributeId, String attributeValue) {
         validateAttribute(attributeId, attributeValue);
         this.attributes.put(attributeId, attributeValue);
+    }
+    
+    /**
+     * Returns an unmodifiable version of the user's attributes.
+     * 
+     * @return unmodifiable version of the user's attributes
+     */
+    public Map<String, String> getAttributes() {
+        return Collections.unmodifiableMap(this.attributes);
     }
     
     /**
