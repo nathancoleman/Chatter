@@ -9,7 +9,7 @@ import data.structure.UserProfile;
  * UserProfileStore manages access to the stored user profiles.
  */
 public class UserProfileStore {
-    private Map<String, UserProfile> userProfiles;
+    protected Map<String, UserProfile> userProfiles;
     
     /**
      * Basic default constructor for UserProfileStore.
