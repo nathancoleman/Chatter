@@ -8,6 +8,8 @@ This project supports the use of [Apache Maven](https://maven.apache.org/) for c
 The installation of Apache Maven is a simple process of extracting the archive and adding the bin folder with the mvn command to the PATH.
 See documentation [here](https://maven.apache.org/install.html).
 
+Apache Maven may also be installed easily using [Homebrew](http://brew.sh/): ```$ brew install maven```
+
 ###### Compilation
 After following the installation instructions, navigate to the base project directory and run
 ```
