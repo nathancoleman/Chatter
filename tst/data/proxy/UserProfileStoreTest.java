@@ -5,23 +5,30 @@ import static org.junit.Assert.assertNull;
 
 import data.structure.UserProfile;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UserProfileStoreTest {
+
+    UserProfileStore ups;
+
+    @Before
+    public void before() {
+        ups = new UserProfileStore();
+    }
+
+    @After
+    public void after() {
+        ups = null;
+    }
 
     /**
      * Tests null return for missing UserProfile id.
      */
     @Test
     public void testGetProfileNonExistent() {
-        TestUserProfileStore userProfileStore = new TestUserProfileStore();
-        Map<String, UserProfile> userProfiles = new HashMap<String, UserProfile>();
-        userProfileStore.setUserProfiles(userProfiles);
-
-        UserProfile profile = userProfileStore.getProfile("missing_user_id");
+        UserProfile profile = ups.getProfile("missing_user_id");
 
         assertNull("A missing UserProfile id was passed in, but null was not returned", profile);
     }
@@ -31,8 +38,6 @@ public class UserProfileStoreTest {
      */
     @Test
     public void testStandardUserProfileCycle() {
-        UserProfileStore ups = new UserProfileStore();
-
         // Create two users
         final UserProfile u1 = new UserProfile("Seth");
         final UserProfile u2 = new UserProfile("Nathan");
@@ -52,15 +57,5 @@ public class UserProfileStoreTest {
         // Check returned users
         assertNull("User was not deleted!", ups.getProfile(u1.getId()));
         assertNull("User was not deleted!", ups.getProfile(u2.getId()));
-    }
-}
-
-/**
- * Internally-scoped class for accessing protected vars
- */
-class TestUserProfileStore extends UserProfileStore {
-
-    public void setUserProfiles(Map<String, UserProfile> userProfiles) {
-        this.userProfiles = userProfiles;
     }
 }

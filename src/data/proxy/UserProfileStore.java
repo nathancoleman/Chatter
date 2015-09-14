@@ -9,7 +9,7 @@ import data.structure.UserProfile;
  * UserProfileStore manages access to the stored user profiles.
  */
 public class UserProfileStore {
-    protected Map<String, UserProfile> userProfiles;
+    private Map<String, UserProfile> userProfiles;
     
     /**
      * Basic default constructor for UserProfileStore.
@@ -32,7 +32,9 @@ public class UserProfileStore {
      *
      * @param id The String id for the UserProfile to delete
      */
-    public void delete(String id) { userProfiles.remove(id); }
+    public void delete(String id) {
+        userProfiles.remove(id);
+    }
     
     /**
      * Gets the posts for the specified user from storage.
