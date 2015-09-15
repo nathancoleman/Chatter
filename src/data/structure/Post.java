@@ -1,37 +1,42 @@
 package data.structure;
 
 /**
- * Post represents a single user post, with both a user and String contents
+ * Post represents a single user_id post, with both a user_id and String contents
  * associated with it.
  */
 public class Post {
-    private String user;
+    private String user_id;
     private String content;
+    private int id;
+
+    public static final int PENDING_WRITE = -1;
     
     /**
      * Constructor for Post, requiring all fields.
      * 
-     * @param user
-     * @param content
+     * @param user_id The String id for the user_id
+     * @param content The content for this Post
      * @throws IllegalArgumentException
      *             if any argument is null
      */
-    public Post(String user, String content) {
-        if (user == null || content == null) {
+    public Post(String user_id, String content) {
+        if (user_id == null || content == null) {
             throw new IllegalArgumentException(
-                    "Neither user nor content may be null.");
+                    "Neither user_id nor content may be null.");
         }
-        this.user = user;
+
+        this.user_id = user_id;
         this.content = content;
+        this.id = PENDING_WRITE;
     }
     
     /**
-     * Getter for user.
+     * Getter for user_id.
      * 
-     * @return user
+     * @return user_id
      */
     public String getUser() {
-        return user;
+        return user_id;
     }
     
     /**
@@ -41,6 +46,30 @@ public class Post {
      */
     public String getContent() {
         return content;
+    }
+
+    /**
+     * Getter for id.
+     *
+     * @return id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Setter for id with overwrite parameter.
+     *
+     * @param value The new value for Post id
+     * @throws IllegalArgumentException
+     *              if id is < 0
+     */
+    public void setId(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Id must be >= 0.");
+        }
+
+        id = value;
     }
     
     /**
