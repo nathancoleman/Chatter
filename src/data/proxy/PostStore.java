@@ -31,29 +31,111 @@ public class PostStore {
         if (post == null) {
             throw new IllegalArgumentException("Post cannot be null.");
         }
+
         String user = post.getUser();
         if (!postsByUser.containsKey(user)) {
             postsByUser.put(user, new ArrayList<Post>());
         }
+        post.setId(getNextPostIdForUser(user));
         postsByUser.get(post.getUser()).add(post);
     }
-    
+
+    /**
+     * Remove a post from storage given the user and id for the post.
+     *
+     * @param user_id The String id for user
+     * @param post_id The int id for the Post to remove from storage
+     * @throws IllegalArgumentException
+     *             if user_id is null
+     */
+    public void delete(String user_id, int post_id) {
+        if (user_id == null) {
+            throw new IllegalArgumentException("User ID cannot be null.");
+        }
+
+        List<Post> posts = postsByUser.get(user_id);
+        for (Post post : posts) {
+            if (post.getId() == post_id)
+            {
+                posts.remove(post);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Remove a post from storage given the Post object.
+     *
+     * @param post The Post object to remove from storage
+     * @throws IllegalArgumentException
+     *             if post is null
+     */
+    public void delete(Post post) {
+        if (post == null) {
+            throw new IllegalArgumentException("Post cannot be null.");
+        }
+
+        delete(post.getUser(), post.getId());
+    }
+
+    /**
+     * Gets the post for the user specified by the id from storage.
+     *
+     * @param user_id The String id for the user
+     * @param post_id The int id for the Post to retrieve
+     * @return the request Post object if found, null otherwise
+     * @throws IllegalArgumentException
+     *             if user_id is null
+     */
+    public Post getPost(String user_id, int post_id) {
+        if (user_id == null) {
+            throw new IllegalArgumentException("User ID cannot be null.");
+        }
+
+        List<Post> userPosts = getPostsByUser(user_id);
+        for (Post post : userPosts) {
+            if (post.getId() == post_id)
+            {
+                return post;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Gets the posts for the specified user from storage.
      * 
-     * @param id The String id for the UserProfile to retrieve
+     * @param user_id The String id for the UserProfile to retrieve
      * @return the user's posts
      * @throws IllegalArgumentException
-     *             if user is null
+     *             if user_id is null
      */
-    public List<Post> getPostsByUser(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("User cannot be null.");
+    public List<Post> getPostsByUser(String user_id) {
+        if (user_id == null) {
+            throw new IllegalArgumentException("User ID cannot be null.");
         }
-        if (postsByUser.containsKey(id)) {
-            return postsByUser.get(id);
+
+        if (postsByUser.containsKey(user_id)) {
+            return postsByUser.get(user_id);
         } else {
             return new ArrayList<Post>();
         }
+    }
+
+    /**
+     * Gets the next post ID available for a particular user
+     *
+     * @param user_id The String id for the user
+     * @return the user's post count + 1
+     * @throws IllegalArgumentException
+     *             if user_id is null
+     */
+    private int getNextPostIdForUser(String user_id) {
+        if (user_id == null) {
+            throw new IllegalArgumentException("User ID cannot be null.");
+        }
+
+        return getPostsByUser(user_id).size() + 1;
     }
 }
