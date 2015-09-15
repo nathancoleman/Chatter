@@ -25,23 +25,32 @@ public class UserProfileStore {
     /**
      * Writes a user profile to storage.
      * 
-     * @param profile
+     * @param profile The UserProfile object to store
      */
     public void write(UserProfile profile) {
         userProfiles.put(profile.getId(), profile);
+    }
+
+    /**
+     * Remove a user profile from storage.
+     *
+     * @param id The String id for the UserProfile to delete
+     */
+    public void delete(String id) {
+        userProfiles.remove(id);
     }
     
     /**
      * Gets the posts for the specified user from storage.
      * 
-     * @param user
+     * @param id The String id for the UserProfile to retrieve
      * @return the user's profile, or null if the user does not exist
      */
-    public UserProfile getProfile(String user) {
-        if (!userProfiles.containsKey(user)) {
+    public UserProfile getProfile(String id) {
+        if (!userProfiles.containsKey(id)) {
             return null;
         } else {
-            return userProfiles.get(user);
+            return userProfiles.get(id);
         }
     }
     
