@@ -65,12 +65,6 @@ public class FeedBuilderTest {
         replay(postStore);
         
         final UserMatcher matcher = new PercentMatchUserMatcher(1);
-        Predicate<UserProfile> userPredicate = new Predicate<UserProfile>() {
-            @Override
-            public boolean test(UserProfile candidate) {
-                return matcher.matches(user1, candidate);
-            }
-        };
         Predicate<Post> postPredicate = new Predicate<Post>() {
             @Override
             public boolean test(Post candidate) {
@@ -78,8 +72,7 @@ public class FeedBuilderTest {
             }
         };
         
-        FeedBuilder feedBuilder = new FeedBuilder(postStore, userStore, userPredicate,
-                postPredicate);
+        FeedBuilder feedBuilder = new FeedBuilder(postStore, userStore, matcher, postPredicate);
         
         List<Post> feed = feedBuilder.getFeedForUser(user1);
         

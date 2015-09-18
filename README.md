@@ -21,3 +21,10 @@ After following the installation instructions, navigate to the base project dire
 ```
 $ mvn test
 ```
+
+###### Running the CLI
+After following the installation instructions, navigate to the base project directory and run
+```
+$ mvn compile exec:java
+```
+This will build any recent changes and then start the interactive CLI for Chatter.
