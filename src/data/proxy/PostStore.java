@@ -46,8 +46,7 @@ public class PostStore {
      *
      * @param user_id The String id for user
      * @param post_id The int id for the Post to remove from storage
-     * @throws IllegalArgumentException
-     *             if user_id is null
+     * @throws IllegalArgumentException if user_id is null
      */
     public void delete(String user_id, int post_id) {
         if (user_id == null) {
@@ -110,33 +109,33 @@ public class PostStore {
      * @return the user's posts
      * @throws IllegalArgumentException if user is null
      */
-    public List<Post> getPostsByUser(String user) {
+    public List<Post> getPostsByUser(String user_id) {
         Predicate<Post> predicate = new Predicate<Post>() {
             @Override
             public boolean test(Post t) {
                 return true;
             }
         };
-        return getPostsByUser(user, predicate);
+        return getPostsByUser(user_id, predicate);
     }
     
     /**
-     * Gets the posts for the specified user from storage.
+     * Gets the posts for the specified user_id from storage.
      * 
-     * @param user
-     * @return the user's posts
-     * @throws IllegalArgumentException if user is null
+     * @param user_id
+     * @return the user_id's posts
+     * @throws IllegalArgumentException if user_id is null
      */
-    public List<Post> getPostsByUser(String user, Predicate<Post> predicate) {
-        if (user == null) {
+    public List<Post> getPostsByUser(String user_id, Predicate<Post> predicate) {
+        if (user_id == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
         if (predicate == null) {
             throw new IllegalArgumentException(
-                    "Predicate cannot be null. Use getPostByUser(user) instead.");
+                    "Predicate cannot be null. Use getPostByUser(user_id) instead.");
         }
-        if (postsByUser.containsKey(user)) {
-            return (List<Post>) FunctionalUtils.filteredAddAll(postsByUser.get(user), predicate,
+        if (postsByUser.containsKey(user_id)) {
+            return (List<Post>) FunctionalUtils.filteredAddAll(postsByUser.get(user_id), predicate,
                     new ArrayList<Post>());
         } else {
             return new ArrayList<Post>();
