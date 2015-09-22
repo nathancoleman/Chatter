@@ -1,9 +1,0 @@
-Chatter uses EasyMock, which requires the inclusion of certain external JARs on the project classpath.
-
-Here are the required dependencies:
-EasyMock: https://bintray.com/artifact/download/easymock/distributions/easymock-3.3.1.zip
-Objenesis: https://bintray.com/artifact/download/easymock/distributions/objenesis-2.2-bin.zip
-CGLib: https://github.com/cglib/cglib/releases/download/RELEASE_3_1/cglib-3.1.jar and https://github.com/cglib/cglib/releases/download/RELEASE_3_1/cglib-nodep-3.1.jar
-ASM: http://forge.ow2.org/project/download.php?group_id=23&file_id=20550
-
-These libraries should be copied to a central location (such as /usr/lib/, C://Program Files/Java, or wherever else you see fit), and you must then add them to your project setup. For eclipse, got to Project->Properties->Java Build Path->Libraries->Add External Jars, and then select each of the primary jars from each library. For ASM, just use the jar in all/.
