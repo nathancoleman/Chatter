@@ -33,8 +33,10 @@ public class UserProfile {
             throw new IllegalArgumentException("ID cannot be null!");
         }
         this.id = id;
-        this.attributes = attributes == null ? new HashMap<String, String>() : attributes;
-        validateAttributes(this.attributes);
+        this.attributes = new HashMap<String, String>();
+        if (attributes != null) {
+            setAttributes(attributes);
+        }
     }
     
     /**
@@ -47,17 +49,6 @@ public class UserProfile {
     }
     
     /**
-     * Gets the value of the specified attribute, or null if the user does not have a value set for
-     * this attribute.
-     * 
-     * @param attributeId
-     * @return attribute value or null
-     */
-    public String getAttribute(String attributeId) {
-        return this.attributes.get(attributeId);
-    }
-    
-    /**
      * Sets the value of the specified attribute.
      * 
      * @param attributeId
@@ -65,7 +56,30 @@ public class UserProfile {
      */
     public void setAttribute(String attributeId, String attributeValue) {
         validateAttribute(attributeId, attributeValue);
-        this.attributes.put(attributeId, attributeValue);
+        this.attributes.put(getNormalizedAttributeString(attributeId),
+                getNormalizedAttributeString(attributeValue));
+    }
+    
+    /**
+     * Sets all attributes in the passed-in Map.
+     * 
+     * @param attributes
+     */
+    public void setAttributes(Map<String, String> attributes) {
+        for (Entry<String, String> attribute : attributes.entrySet()) {
+            setAttribute(attribute.getKey(), attribute.getValue());
+        }
+    }
+    
+    /**
+     * Gets the value of the specified attribute, or null if the user does not have a value set for
+     * this attribute.
+     * 
+     * @param attributeId
+     * @return attribute value or null
+     */
+    public String getAttribute(String attributeId) {
+        return this.attributes.get(getNormalizedAttributeString(attributeId));
     }
     
     /**
@@ -149,6 +163,16 @@ public class UserProfile {
         if (attributeValue == null) {
             throw new IllegalArgumentException("An attribute cannot have a null value!");
         }
+    }
+    
+    /**
+     * Normalizes Attribute Strings.
+     * 
+     * @param input
+     * @return
+     */
+    public static String getNormalizedAttributeString(String input) {
+        return input.trim().toLowerCase().replaceAll("\\s", " ");
     }
     
 }

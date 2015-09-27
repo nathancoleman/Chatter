@@ -1,44 +1,28 @@
 package data.proxy;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 
-import data.proxy.utils.FunctionalUtils;
 import data.structure.UserProfile;
 
 /**
  * UserProfileStore manages access to the stored user profiles.
  */
-public class UserProfileStore {
-    private Map<String, UserProfile> userProfiles;
-    
-    /**
-     * Basic default constructor for UserProfileStore.
-     */
-    public UserProfileStore() {
-        userProfiles = new HashMap<String, UserProfile>();
-    }
+public abstract interface UserProfileStore {
     
     /**
      * Writes a user profile to storage.
      * 
      * @param profile The UserProfile object to store
      */
-    public void write(UserProfile profile) {
-        userProfiles.put(profile.getId(), profile);
-    }
-
+    public void write(UserProfile profile);
+    
     /**
      * Remove a user profile from storage.
      *
      * @param id The String id for the UserProfile to delete
      */
-    public void delete(String id) {
-        userProfiles.remove(id);
-    }
+    public void delete(String id);
     
     /**
      * Gets the posts for the specified user from storage.
@@ -46,13 +30,7 @@ public class UserProfileStore {
      * @param id The String id for the UserProfile to retrieve
      * @return the user's profile, or null if the user does not exist
      */
-    public UserProfile getProfile(String id) {
-        if (!userProfiles.containsKey(id)) {
-            return null;
-        } else {
-            return userProfiles.get(id);
-        }
-    }
+    public UserProfile getProfile(String id);
     
     /**
      * Returns a filtered collection of users who match the given condition.
@@ -60,8 +38,5 @@ public class UserProfileStore {
      * @param predicate
      * @return filtered collection of users
      */
-    public Collection<UserProfile> getUsersForPredicate(Predicate<UserProfile> predicate) {
-        return FunctionalUtils.filteredAddAll(this.userProfiles.values(), predicate,
-                new ArrayList<UserProfile>());
-    }
+    public Collection<UserProfile> getUsersForPredicate(Predicate<UserProfile> predicate);
 }

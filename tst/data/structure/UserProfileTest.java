@@ -79,7 +79,8 @@ public class UserProfileTest {
         
         profile.setAttribute(attributeId, attributeValue);
         
-        assertEquals("The returned attribute value was incorrect!", attributeValue,
+        assertEquals("The returned attribute value was incorrect!",
+                UserProfile.getNormalizedAttributeString(attributeValue),
                 profile.getAttribute(attributeId));
     }
     
@@ -156,10 +157,14 @@ public class UserProfileTest {
         UserProfile user1 = new UserProfile("Seth");
         UserProfile user2 = new UserProfile("Charles");
         
-        String[] commonAttrib1 = { "profession", "Software Developer" };
-        String[] commonAttrib2 = { "hobby", "Reading" };
-        String[] uniqueAttrib1 = { "location", "New York, NY" };
-        String[] uniqueAttrib2 = { "location", "Tuscaloosa, AL" };
+        String[] commonAttrib1 = { UserProfile.getNormalizedAttributeString("profession"),
+                UserProfile.getNormalizedAttributeString("Software Developer") };
+        String[] commonAttrib2 = { UserProfile.getNormalizedAttributeString("hobby"),
+                UserProfile.getNormalizedAttributeString("Reading") };
+        String[] uniqueAttrib1 = { UserProfile.getNormalizedAttributeString("location"),
+                UserProfile.getNormalizedAttributeString("New York, NY") };
+        String[] uniqueAttrib2 = { UserProfile.getNormalizedAttributeString("location"),
+                UserProfile.getNormalizedAttributeString("Tuscaloosa, AL") };
         
         // Set common attributes
         user1.setAttribute(commonAttrib1[0], commonAttrib1[1]);

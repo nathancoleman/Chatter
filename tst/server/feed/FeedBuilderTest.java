@@ -16,8 +16,8 @@ import org.junit.Test;
 
 import server.matching.PercentMatchUserMatcher;
 import server.matching.UserMatcher;
+import data.proxy.LocalTransientUserProfileStore;
 import data.proxy.PostStore;
-import data.proxy.UserProfileStore;
 import data.structure.Post;
 import data.structure.UserProfile;
 
@@ -45,7 +45,7 @@ public class FeedBuilderTest {
         // match.
         user3.setAttribute("uniqueAttribute", "I'm special!");
         
-        UserProfileStore userStore = createMock(UserProfileStore.class);
+        LocalTransientUserProfileStore userStore = createMock(LocalTransientUserProfileStore.class);
         expect(userStore.getUsersForPredicate(anyObject(Predicate.class))).andReturn(
                 Arrays.asList(user1, user2)).atLeastOnce();
         replay(userStore);
@@ -65,8 +65,12 @@ public class FeedBuilderTest {
         replay(postStore);
         
         final UserMatcher matcher = new PercentMatchUserMatcher(1);
+        Predicate<UserProfile> userPredicate = new Predicate<UserProfile>() {
+            public boolean test(UserProfile candidate) {
+                return matcher.matches(user1, candidate);
+            }
+        };
         Predicate<Post> postPredicate = new Predicate<Post>() {
-            @Override
             public boolean test(Post candidate) {
                 return true;
             }

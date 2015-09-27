@@ -28,3 +28,7 @@ After following the installation instructions, navigate to the base project dire
 $ mvn compile exec:java
 ```
 This will build any recent changes and then start the interactive CLI for Chatter.
+
+###### Using the AWS clients
+To use any of the AWS clients built into Chatter, please follow the instructions for setting up and using AWS credentials here:
+http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/credentials.html
