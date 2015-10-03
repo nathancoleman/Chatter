@@ -48,7 +48,6 @@ public class PostStore {
      */
     public List<Post> getPostsByUser(String user) {
         Predicate<Post> predicate = new Predicate<Post>() {
-            @Override
             public boolean test(Post t) {
                 return true;
             }

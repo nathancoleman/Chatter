@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import server.feed.FeedBuilder;
 import server.matching.PercentMatchUserMatcher;
 import server.matching.UserMatcher;
+import data.proxy.LocalTransientUserProfileStore;
 import data.proxy.PostStore;
 import data.proxy.UserProfileStore;
 import data.structure.Post;
@@ -35,11 +36,12 @@ public class SimpleServerCLI {
      * @param args
      */
     public static void main(String[] args) {
-        final UserProfileStore userStore = new UserProfileStore();
+        // final UserProfileStore userStore = new DDBUserProfileStore(new DynamoDB(
+        // new AmazonDynamoDBClient()), "UserProfiles");
+        final UserProfileStore userStore = new LocalTransientUserProfileStore();
         final PostStore postStore = new PostStore();
         final UserMatcher userMatcher = new PercentMatchUserMatcher(DEFAULT_PERCENT_MATCH);
         final Predicate<Post> postPredicate = new Predicate<Post>() {
-            @Override
             public boolean test(Post post) {
                 return true;
             }

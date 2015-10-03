@@ -9,13 +9,13 @@ import org.junit.Test;
 
 import data.structure.UserProfile;
 
-public class UserProfileStoreTest {
+public class LocalTransientUserProfileStoreTest {
     
     UserProfileStore ups;
     
     @Before
     public void before() {
-        ups = new UserProfileStore();
+        ups = new LocalTransientUserProfileStore();
     }
     
     @After

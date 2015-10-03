@@ -60,7 +60,6 @@ public class FeedBuilder {
         List<Post> posts = new ArrayList<Post>();
         
         Predicate<UserProfile> userPredicate = new Predicate<UserProfile>() {
-            @Override
             public boolean test(UserProfile candidate) {
                 return userMatcher.matches(user, candidate);
             }

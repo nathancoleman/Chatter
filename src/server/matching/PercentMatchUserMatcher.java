@@ -27,7 +27,6 @@ public class PercentMatchUserMatcher implements UserMatcher {
     /**
      * {@inheritDoc} This implementation matches based on a required percentage match threshold.
      */
-    @Override
     public boolean matches(UserProfile primary, UserProfile secondary) {
         return (double) primary.getAttributeIntersection(secondary).size()
                 / primary.getAttributes().size() >= this.threshold;
